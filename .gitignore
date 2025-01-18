@@ -2,3 +2,4 @@ __pycache__/
 /dist/
 /result
 /hyprland/ignore.conf
+/scheme/current.conf
