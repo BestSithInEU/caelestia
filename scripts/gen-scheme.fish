@@ -6,6 +6,6 @@ set scheme_path $cache/caelestia/scheme/current.txt
 set scheme mocha
 if test -f $scheme_path
     set -l current_scheme (cat $scheme_path)
-    test -f ~/.config/hypr/schemes/$current_scheme.conf && set scheme $current_scheme
+    test -f ~/.config/hypr/scheme/$current_scheme.conf && set scheme $current_scheme
 end
-echo "source = ~/.config/hypr/schemes/$scheme.conf" > ~/.config/hypr/schemes/current.conf
+echo "source = ~/.config/hypr/scheme/$scheme.conf" > ~/.config/hypr/scheme/current.conf
