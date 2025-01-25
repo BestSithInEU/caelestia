@@ -3,3 +3,4 @@ __pycache__/
 /result
 /hyprland/ignore.conf
 /scheme/current.conf
+/scheme/dynamic.conf
