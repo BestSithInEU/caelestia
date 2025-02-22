@@ -11,7 +11,12 @@ set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.loc
 set -l scheme_path $state/caelestia/scheme/current.txt
 
 if test -f $scheme_path
-    read-scheme $scheme_path > ~/.config/hypr/scheme/current.conf
+    set -l tmp (mktemp)
+    read-scheme $scheme_path > $tmp
+    if ! cmp -s $tmp ~/.config/hypr/scheme/current.conf
+        cp $tmp ~/.config/hypr/scheme/current.conf
+        hyprctl reload
+    end
 else
-    cp -f ~/.config/hypr/scheme/default.conf ~/.config/hypr/scheme/current.conf
+    cp ~/.config/hypr/scheme/default.conf ~/.config/hypr/scheme/current.conf
 end
