@@ -1,6 +1,6 @@
 #!/bin/fish
 
-set -q XDG_CACHE_HOME && set -l cache $XDG_CACHE_HOME || set -l cache ~/.cache
+set -q XDG_CACHE_HOME && set -l cache $XDG_CACHE_HOME || set -l cache $HOME/.cache
 set -l cache $cache/caelestia/weather.json
 
 if test -f $cache
