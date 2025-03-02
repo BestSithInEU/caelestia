@@ -7,4 +7,4 @@ end
 set -l position (caelestia shell media position)
 set -l length (caelestia shell media length)
 
-echo "$(fmt-time $position)/$(fmt-time $length)"
+test $position != 'No media' && echo "$(fmt-time $position)/$(fmt-time $length)"
