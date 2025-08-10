@@ -1,0 +1,36 @@
+# Ripgrep configuration
+# Always use colors
+--color=always
+
+# Search hidden files but ignore .git directory
+--hidden
+--glob=!.git/*
+
+# Ignore common build/cache directories
+--glob=!node_modules/*
+--glob=!.cache/*
+--glob=!target/*
+--glob=!dist/*
+--glob=!build/*
+--glob=!__pycache__/*
+--glob=!*.pyc
+--glob=!.pytest_cache/*
+--glob=!.tox/*
+
+# Case insensitive unless uppercase letters
+--smart-case
+
+# Show line numbers
+--line-number
+
+# Show column numbers
+--column
+
+# Maximum number of columns to display
+--max-columns=200
+
+# Preview context
+--context=3
+
+# Follow symbolic links
+--follow

@@ -1,0 +1,76 @@
+[Default Applications]
+# Text files
+text/plain=org.gnome.TextEditor.desktop;code.desktop;
+text/markdown=org.gnome.TextEditor.desktop;code.desktop;
+text/x-readme=org.gnome.TextEditor.desktop;code.desktop;
+application/x-shellscript=org.gnome.TextEditor.desktop;code.desktop;
+
+# Code files
+text/x-python=code.desktop;org.gnome.TextEditor.desktop;
+text/x-javascript=code.desktop;org.gnome.TextEditor.desktop;
+text/x-typescript=code.desktop;org.gnome.TextEditor.desktop;
+text/x-java=code.desktop;org.gnome.TextEditor.desktop;
+text/x-c=code.desktop;org.gnome.TextEditor.desktop;
+text/x-cpp=code.desktop;org.gnome.TextEditor.desktop;
+text/x-rust=code.desktop;org.gnome.TextEditor.desktop;
+text/x-go=code.desktop;org.gnome.TextEditor.desktop;
+text/html=code.desktop;firefox.desktop;
+text/css=code.desktop;org.gnome.TextEditor.desktop;
+application/json=code.desktop;org.gnome.TextEditor.desktop;
+application/xml=code.desktop;org.gnome.TextEditor.desktop;
+application/yaml=code.desktop;org.gnome.TextEditor.desktop;
+
+# Configuration files
+text/x-ini=org.gnome.TextEditor.desktop;code.desktop;
+text/x-conf=org.gnome.TextEditor.desktop;code.desktop;
+text/x-toml=code.desktop;org.gnome.TextEditor.desktop;
+
+# Images
+image/jpeg=org.gnome.eog.desktop;
+image/png=org.gnome.eog.desktop;
+image/gif=org.gnome.eog.desktop;
+image/webp=org.gnome.eog.desktop;
+image/svg+xml=org.gnome.eog.desktop;firefox.desktop;
+
+# Videos
+video/mp4=org.gnome.Totem.desktop;mpv.desktop;
+video/x-matroska=org.gnome.Totem.desktop;mpv.desktop;
+video/webm=org.gnome.Totem.desktop;mpv.desktop;
+video/quicktime=org.gnome.Totem.desktop;mpv.desktop;
+
+# Audio
+audio/mpeg=org.gnome.Rhythmbox3.desktop;
+audio/mp4=org.gnome.Rhythmbox3.desktop;
+audio/flac=org.gnome.Rhythmbox3.desktop;
+audio/ogg=org.gnome.Rhythmbox3.desktop;
+audio/x-wav=org.gnome.Rhythmbox3.desktop;
+
+# Documents
+application/pdf=org.gnome.Evince.desktop;
+application/vnd.oasis.opendocument.text=org.libreoffice.Writer.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=org.libreoffice.Writer.desktop;
+application/vnd.ms-excel=org.libreoffice.Calc.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=org.libreoffice.Calc.desktop;
+
+# Archives
+application/zip=org.gnome.FileRoller.desktop;
+application/x-tar=org.gnome.FileRoller.desktop;
+application/gzip=org.gnome.FileRoller.desktop;
+application/x-7z-compressed=org.gnome.FileRoller.desktop;
+application/x-rar=org.gnome.FileRoller.desktop;
+
+# Web
+text/html=firefox.desktop;
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+
+[Added Associations]
+# Additional associations for file types
+application/x-desktop=org.gnome.TextEditor.desktop;
+inode/directory=org.gnome.Nautilus.desktop;
+
+[Removed Associations]
+# Remove unwanted default applications

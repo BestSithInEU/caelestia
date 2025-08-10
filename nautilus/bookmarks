@@ -1,0 +1,15 @@
+# Nautilus bookmarks file
+# Format: URI [Label]
+# Example: file:///home/user/Documents Documents
+
+file:///home/bestsithineu/Documents Documents
+file:///home/bestsithineu/Downloads Downloads
+file:///home/bestsithineu/Pictures Pictures
+file:///home/bestsithineu/Music Music
+file:///home/bestsithineu/Videos Videos
+file:///home/bestsithineu/Desktop Desktop
+file:///home/bestsithineu/Documents/Projects Projects
+file:///home/bestsithineu/.config Configuration
+file:///home/bestsithineu/.local/share Local Data
+file:///tmp Temporary Files
+file:///usr/share System Resources
