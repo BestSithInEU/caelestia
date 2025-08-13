@@ -1,6 +1,6 @@
 # Ripgrep configuration
 # Always use colors
---color=always
+--color=auto
 
 # Search hidden files but ignore .git directory
 --hidden
