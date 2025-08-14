@@ -1,0 +1,31 @@
+
+---
+# RGB & Lighting Control Applications
+# Configuration for RGB hardware control and customization tools
+
+categories:
+  keyboard_rgb:
+    - name: ckb-next
+      description: "Corsair keyboard and mouse driver"
+      type: driver
+      
+  universal_rgb:
+    - name: openrgb
+      description: "Universal RGB lighting control"
+      type: application
+      
+  liquid_cooling:
+    - name: liquidctl
+      description: "Liquid cooler and fan control"
+      type: utility
+      
+  razer_hardware:
+    - name: openrazer-daemon
+      description: "Razer hardware daemon"
+      type: daemon
+    - name: openrazer-driver-dkms
+      description: "Razer driver kernel module"
+      type: driver
+    - name: polychromatic
+      description: "Razer hardware management GUI"
+      type: application

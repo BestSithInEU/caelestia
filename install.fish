@@ -136,12 +136,40 @@ if ! pacman -Q $aur_helper &> /dev/null
     $aur_helper -Y --devel --save
 end
 
-# Install metapackage for deps
-log 'Installing metapackage...'
-$aur_helper -S --needed caelestia-meta $noconfirm
+# Install dependencies from apps.yaml
+log 'Installing core dependencies...'
+for pkg in (yq -r '.core_dependencies[]' apps.yaml)
+    $aur_helper -S --needed $pkg $noconfirm
+end
+
+# Ask about optional dependencies
+log 'Installing optional dependencies...'
+for pkg in (yq -r '.optional_dependencies[]' apps.yaml)
+    $aur_helper -S --needed $pkg $noconfirm
+end
 
 # Cd into dir
 cd (dirname (status filename)) || exit 1
+
+# Setup shell components
+log 'Setting up caelestia shell...'
+
+# Compile beat detector
+log 'Compiling beat detector...'
+cd shell
+g++ -std=c++17 -Wall -Wextra -I/usr/include/pipewire-0.3 -I/usr/include/spa-0.2 -I/usr/include/aubio -o beat_detector assets/beat_detector.cpp -lpipewire-0.3 -laubio
+
+# Create system directory and symlink for beat detector
+log 'Installing beat detector...'
+sudo mkdir -p /usr/lib/caelestia
+sudo ln -sf (realpath beat_detector) /usr/lib/caelestia/beat_detector
+
+# Create quickshell config symlink
+log 'Setting up quickshell config...'
+mkdir -p ~/.config/quickshell
+ln -sf (realpath .) ~/.config/quickshell/caelestia
+
+cd ..
 
 # Install hypr* configs
 if confirm-overwrite $config/hypr
@@ -213,9 +241,9 @@ end
 
 # Install vscode
 if set -q _flag_vscode
-    test "$_flag_vscode" = 'code' && set -l prog 'code' || set -l prog 'codium'
-    test "$_flag_vscode" = 'code' && set -l packages 'code' || set -l packages 'vscodium-bin' 'vscodium-bin-marketplace'
-    test "$_flag_vscode" = 'code' && set -l folder 'Code' || set -l folder 'VSCodium'
+    set -l prog 'code'
+    set -l packages 'visual-studio-code-bin'
+    set -l folder 'Code'
     set -l folder $config/$folder/User
 
     log "Installing vs$prog..."

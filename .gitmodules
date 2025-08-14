@@ -1,3 +1,6 @@
 [submodule "cli"]
 	path = cli
-	url = https://github.com/BestSithInEU/caelestia-cli.git
+	url = git:github.com:BestSithInEU/caelestia-cli.git
+[submodule "shell"]
+	path = shell
+	url = git@github.com:BestSithInEU/shell.git

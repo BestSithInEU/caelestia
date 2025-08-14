@@ -1,31 +1,73 @@
+core_dependencies:
+  # Hyprland ecosystem
+  - hyprland
+  - xdg-desktop-portal-hyprland
+  - xdg-desktop-portal-gtk
+  - hyprpicker
+  - hypridle
 
----
-# RGB & Lighting Control Applications
-# Configuration for RGB hardware control and customization tools
+  # System utilities
+  - wl-clipboard
+  - cliphist
+  - bluez-utils
+  - inotify-tools
+  - app2unit
+  - wireplumber
+  - trash-cli
 
-categories:
-  keyboard_rgb:
-    - name: ckb-next
-      description: "Corsair keyboard and mouse driver"
-      type: driver
-      
-  universal_rgb:
-    - name: openrgb
-      description: "Universal RGB lighting control"
-      type: application
-      
-  liquid_cooling:
-    - name: liquidctl
-      description: "Liquid cooler and fan control"
-      type: utility
-      
-  razer_hardware:
-    - name: openrazer-daemon
-      description: "Razer hardware daemon"
-      type: daemon
-    - name: openrazer-driver-dkms
-      description: "Razer driver kernel module"
-      type: driver
-    - name: polychromatic
-      description: "Razer hardware management GUI"
-      type: application
+  # Terminal & shell
+  - foot
+  - fish
+  - fastfetch
+  - starship
+  - btop
+
+  # Essential utilities
+  - jq
+  - socat
+  - imagemagick
+  - curl
+  - ddcutil
+  - brightnessctl
+  - cava
+  - networkmanager
+  - lm_sensors
+  - aubio
+  - libpipewire
+  - glibc
+  - qt6-declarative
+  - gcc-libs
+  - grim
+  - swappy
+  - libqalculate
+  - libnotify
+  - dart-sass
+  - slurp
+  - wl-screenrec
+  - glib2
+  - libpulse
+  - fuzzel
+
+  # Theming
+  - adw-gtk-theme
+  - papirus-icon-theme
+  - qt5ct
+  - qt6ct
+  - ttf-jetbrains-mono-nerd
+  - ttf-material-symbols-variable-git
+  - ttf-cascadia-code-nerd
+  - appimagelauncher
+  - libappimage
+  - squashfuse
+
+optional_dependencies:
+  # Applications
+  - spotify
+  - visual-studio-code-bin
+  - zen-browser
+  - todoist-appimage
+
+  # System components
+  - uwsm
+  - gnome-keyring
+  - polkit-gnome
