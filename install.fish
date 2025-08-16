@@ -136,6 +136,24 @@ if ! pacman -Q $aur_helper &> /dev/null
     $aur_helper -Y --devel --save
 end
 
+log 'Starting installation...'
+if ! command -v uv >/dev/null 2>&1
+    log 'uv not found. Please install it first.'
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    log 'uv installed successfully.'
+else
+    log 'uv is already installed.'
+end
+
+
+if ! command -v yq >/dev/null 2>&1
+    log 'yq not found. Please install it first.'
+    curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq && chmod +x /usr/local/bin/yq
+    log 'yq installed successfully.'
+else
+    log 'yq is already installed.'
+end
+
 # Install dependencies from apps.yaml
 log 'Installing core dependencies...'
 for pkg in (yq -r '.core_dependencies[]' apps.yaml)

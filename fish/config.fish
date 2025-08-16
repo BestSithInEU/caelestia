@@ -57,6 +57,7 @@ if status is-interactive
 
     # Caelestia shell environment
     set -gx CAELESTIA_BD_PATH /home/bestsithineu/Documents/gitProjects/shell/beat_detector
+    set -gx PATH /home/bestsithineu/.local/bin/caelestia $PATH
 
     # For jumping between prompts in foot terminal
     function mark_prompt_start --on-event fish_prompt
