@@ -3,7 +3,6 @@
 # Zoxide - smarter cd
 if type -q zoxide
     zoxide init fish | source
-    alias cd __zoxide_z
     alias cdi __zoxide_zi
 end
 
