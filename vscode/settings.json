@@ -222,8 +222,9 @@
 	"diffEditor.ignoreTrimWhitespace": false,
 
 	"gitlens.home.preview.enabled": false,
-	"gitlens.ai.model": "gitkraken",
-	"gitlens.ai.vscode.model": "copilot:claude-3.7-sonnet-thought",
+	"gitlens.ai.model": "vscode",
+	"gitlens.ai.vscode.model": "copilot:gpt-5",
+	"gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash"
 
 	// ================================
 	// THEME & VISUAL CUSTOMIZATION
@@ -541,8 +542,8 @@
 	"sonarlint.output.showVerboseLogs": true,
 	"sonarlint.connectedMode.connections.sonarqube": [
 		{
-			"serverUrl": "http://localhost:32001",
-			"connectionId": "http-localhost-32001"
+			"serverUrl": "http://localhost:7005",
+			"connectionId": "http-localhost-7005"
 		}
 	],
 
@@ -598,5 +599,13 @@
 	"workbench.colorTheme": "Caelestia",
 	"superdesign.aiModelProvider": "anthropic",
 	"superdesign.aiModel": "claude-4-sonnet-20250514",
-	"gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash"
+	"semanticCodeSearch.embeddingProvider.provider": "Ollama",
+	"semanticCodeSearch.embeddingProvider.model": "mxbai-embed-large",
+	"semanticCodeSearch.embeddingProvider.host": "http://127.0.0.1:11434",
+	"semanticCodeSearch.embeddingProvider.keepAlive": "5m",
+	"semanticCodeSearch.milvus.address": "https://in03-05fcecb4488b74e.serverless.aws-eu-central-1.cloud.zilliz.com",
+	"semanticCodeSearch.milvus.token": "e26bf521913457303b478f913471f52262c5a4686f814628f441203063b42446abd8e68a3c75d514bb6d17c0b6d7a44d2a1dfe88",
+	"semanticCodeSearch.splitter.type": "ast",
+	"semanticCodeSearch.splitter.chunkSize": 1000,
+	"semanticCodeSearch.splitter.chunkOverlap": 200
 }
