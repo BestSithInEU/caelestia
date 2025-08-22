@@ -69,3 +69,26 @@ if status is-interactive
         echo -en "\e]133;A\e\\"
     end
 end
+
+# Wine gaming environment for Hyprland
+set -gx WINE_GAMES_PREFIX "$HOME/.wine-games"
+
+# Wine functions for gaming
+function wine-game
+    env WAYLAND_DISPLAY= DISPLAY=:0 SDL_VIDEODRIVER=x11 WINEPREFIX=$WINE_GAMES_PREFIX wine explorer /desktop=Default,1920x1080 $argv
+end
+
+function wine-renpy
+    env WAYLAND_DISPLAY= DISPLAY=:0 SDL_VIDEODRIVER=x11 RENPY_RENDERER=sw RENPY_GL_TEST_ENV=1 RENPY_SKIP_GL_TEST=1 RENPY_GL_SKIP_TEST=1 RENPY_FORCE_SW_RENDERER=1 RENPY_GL_DISABLE=1 MESA_SOFTWARE=1 LIBGL_ALWAYS_SOFTWARE=1 wine explorer /desktop=Default,1920x1080 $argv
+end
+
+function wine-unity
+    env WAYLAND_DISPLAY= DISPLAY=:0 SDL_VIDEODRIVER=x11 DXVK_HUD=fps WINEPREFIX=$WINE_GAMES_PREFIX wine explorer /desktop=Default,1920x1080 $argv
+end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
+# Add sonar-scanner to PATH
+set -gx SONAR_SCANNER_HOME "/opt/sonar-scanner"
+set -gx PATH "$SONAR_SCANNER_HOME/bin" $PATH
