@@ -1,5 +1,9 @@
 # C++ Development Configuration
 
+# CUDA Configuration
+set -x CUDA_HOME /opt/cuda
+set -x CUDACXX /opt/cuda/bin/nvcc
+
 # Compiler aliases
 alias g++ 'g++ -std=c++20 -Wall -Wextra -pedantic'
 alias g++d 'g++ -std=c++20 -Wall -Wextra -pedantic -g -O0 -DDEBUG'

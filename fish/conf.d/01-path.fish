@@ -26,3 +26,6 @@ fish_add_path -g ~/.bun/bin
 fish_add_path -g /usr/local/sbin
 fish_add_path -g /usr/sbin
 fish_add_path -g /sbin
+
+# CUDA
+fish_add_path -g /opt/cuda/bin
