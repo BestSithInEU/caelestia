@@ -46,10 +46,8 @@ Dependencies:
 -   xdg-desktop-portal-hyprland
 -   xdg-desktop-portal-gtk
 -   hyprpicker
--   hypridle
 -   wl-clipboard
 -   cliphist
--   bluez-utils
 -   inotify-tools
 -   app2unit
 -   wireplumber
@@ -60,9 +58,7 @@ Dependencies:
 -   starship
 -   btop
 -   jq
--   socat
--   imagemagick
--   curl
+-   eza
 -   adw-gtk-theme
 -   papirus-icon-theme
 -   qt5ct-kde

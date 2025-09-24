@@ -55,6 +55,31 @@ if status is-interactive
         zoxide init fish | source
     end
 
+    # Direnv + Zoxide
+    command -v direnv &> /dev/null && direnv hook fish | source
+    command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
+
+    # Better ls
+    alias ls='eza --icons --group-directories-first -1'
+
+    # Abbrs
+    abbr gd 'git diff'
+    abbr gc 'git commit -am'
+    abbr gl 'git log'
+    abbr gs 'git status'
+    abbr gst 'git stash'
+    abbr gsp 'git stash pop'
+    abbr gp 'git push'
+    abbr gpl 'git pull'
+    abbr gsw 'git switch'
+    abbr gsm 'git switch main'
+    abbr gb 'git branch'
+
+    abbr l 'ls'
+    abbr ll 'ls -l'
+    abbr la 'ls -a'
+    abbr lla 'ls -la'
+
     # Custom colours
     if test -f ~/.local/state/caelestia/sequences.txt
         cat ~/.local/state/caelestia/sequences.txt 2>/dev/null | tr -d '\n'
