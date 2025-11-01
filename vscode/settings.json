@@ -19,9 +19,7 @@
 	"editor.hideCursorInOverviewRuler": false,
 	"editor.inlineSuggest.enabled": true,
 	"editor.insertSpaces": false,
-	"editor.minimap.enabled": true,
 	"editor.minimap.renderCharacters": true,
-	"editor.minimap.showSlider": "always",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"editor.occurrencesHighlightDelay": 0,
 	"editor.scrollBeyondLastLine": true,
@@ -37,7 +35,7 @@
 	"editor.padding.bottom": 16,
 
 	// Font & Typography
-	"editor.fontFamily": "MonoLisa",
+	"editor.fontFamily": "MonoLisa, CaskaydiaCove Nerd Font, FantasqueSansM Nerd Font, FiraCode Nerd Font, 'Courier New', monospace",
 	"editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero'",
 	"editor.fontSize": 15,
 	"editor.lineHeight": 21,
@@ -62,13 +60,12 @@
 	// ================================
 	"workbench.activityBar.location": "bottom",
 	"workbench.editor.empty.hint": "hidden",
-	"workbench.editor.enablePreview": true,
 	"workbench.editor.labelFormat": "medium",
 	"workbench.editor.tabActionCloseVisibility": false,
 	"workbench.editor.tabSizing": "shrink",
 	"workbench.editor.tabHeight": 35,
 	"workbench.editor.showTabs": "multiple",
-	"workbench.iconTheme": "sweet-vscode-icons",
+	"workbench.iconTheme": "catppuccin-perfect-macchiato",
 	"workbench.layoutControl.enabled": false,
 	"workbench.list.smoothScrolling": true,
 	"workbench.tree.indent": 15,
@@ -88,9 +85,6 @@
 		"minimap.background": "#00000000",
 		"tab.inactiveBackground": "#0c0e14"
 	},
-
-	// Window
-	"window.commandCenter": false,
 	"window.titleBarStyle": "custom",
 	"window.title": " ",
 	"window.newWindowProfile": "Default",
@@ -595,8 +589,56 @@
 	"shfmt.languageAssociations": {
 		"fish": false
 	},
-	"workbench.colorTheme": "Caelestia",
 	"superdesign.aiModelProvider": "anthropic",
 	"superdesign.aiModel": "claude-4-sonnet-20250514",
-	"gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash"
+	"python.defaultInterpreterPath": "/home/bestsithineu/Desktop/fuckThisShit/.venv",
+	"gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash",
+	"[cpp]": {
+		"editor.defaultFormatter": "xaver.clang-format"
+	},
+	"editor.minimap.showSlider": "always",
+	"[dockercompose]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.autoIndent": "advanced",
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": false,
+			"strings": true
+		},
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+
+	"window.dialogStyle": "custom",
+	"workbench.colorTheme": "Material Code",
+	"kilo-code.allowedCommands": ["git log", "git diff", "git show"],
+	"kilo-code.deniedCommands": [],
+	"github.copilot.enable": {
+		"*": false,
+		"plaintext": false,
+		"markdown": true,
+		"scminput": false
+	},
+	"material-code.syntaxTheme": "Synthwave x Fluoromachine & fixed epic animations & contrast & customized",
+	"semanticCodeSearch.embeddingProvider.provider": "Ollama",
+	"semanticCodeSearch.embeddingProvider.model": "bge-large",
+	"semanticCodeSearch.milvus.address": "http://localhost:7007",
+	"semanticCodeSearch.splitter.type": "ast",
+	"semanticCodeSearch.splitter.chunkSize": 1000,
+	"semanticCodeSearch.splitter.chunkOverlap": 200,
+	"[sql]": {
+		"editor.defaultFormatter": "mtxr.sqltools"
+	},
+	"sqltools.codelensLanguages": ["sql", "postgresql"],
+	"sqltools.completionLanguages": ["sql", "postgresql"],
+	"geminicodeassist.project": "polynomial-button-s9b77",
+	"diffEditor.codeLens": true,
+	"geminicodeassist.inlineSuggestions.enableAuto": false,
+	"chat.instructionsFilesLocations": {
+		".github/instructions": true,
+		"/home/bestsithineu/.aitk/instructions/": true
+	}
 }
