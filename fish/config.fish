@@ -99,3 +99,4 @@ if status is-interactive
         echo -en "\e]133;A\e\\"
     end
 end
+export PATH="$HOME/.local/bin:$PATH"
