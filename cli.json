@@ -1,0 +1,184 @@
+{
+	"theme": {
+		"enableTerm": true,
+		"enableHypr": true,
+		"enableDiscord": true,
+		"enableSpicetify": true,
+		"enableFuzzel": true,
+		"enableBtop": true,
+		"enableNvtop": true,
+		"enableHtop": true,
+		"enableGtk": true,
+		"enableQt": true,
+		"enableWarp": true,
+		"enableCava": true,
+		"enableZen": true,
+		"enableTweakCC": true
+	},
+	"resizer": {
+		"rules": [
+			{
+				"name": "Write: (no subject)",
+				"matchType": "initialTitle",
+				"width": "50%",
+				"height": "54%",
+				"actions": ["float", "center"]
+			},
+			{
+				"name": "(Bitwarden",
+				"matchType": "titleContains",
+				"width": "20%",
+				"height": "54%",
+				"actions": ["float", "center"]
+			},
+			{
+				"name": "Sign in - Google Accounts",
+				"matchType": "titleContains",
+				"width": "35%",
+				"height": "65%",
+				"actions": ["float", "center"]
+			},
+			{
+				"name": "Oturum açın - Google Hesapları",
+				"matchType": "titleContains",
+				"width": "35%",
+				"height": "65%",
+				"actions": ["float", "center"]
+			},
+			{
+				"name": "oauth",
+				"matchType": "titleContains",
+				"width": "30%",
+				"height": "60%",
+				"actions": ["float", "center"]
+			},
+			{
+				"name": "^[Pp]icture(-| )in(-| )[Pp]icture$",
+				"matchType": "titleRegex",
+				"width": "400",
+				"height": "300",
+				"actions": ["pip"]
+			},
+			{
+				"name": "Steam Settings",
+				"matchType": "initialTitle",
+				"width": "44%",
+				"height": "67%",
+				"actions": ["float", "center"]
+			}
+		]
+	},
+	"toggles": {
+		"music": {
+			"spotify": {
+				"enable": true
+			}
+		},
+		"communication": {
+			"discord": {
+				"enable": true,
+				"match": [
+					{
+						"class": "discord"
+					},
+					{
+						"class": "Discord"
+					}
+				],
+				"command": ["discord"],
+				"move": true
+			}
+		},
+		"terminal": {
+			"warp": {
+				"enable": true,
+				"match": [
+					{
+						"class": "dev.warp.Warp"
+					}
+				],
+				"command": ["warp-terminal"],
+				"move": true
+			}
+		},
+		"mail": {
+			"thunderbird": {
+				"enable": true,
+				"match": [
+					{
+						"class": "thunderbird"
+					},
+					{
+						"class": "Thunderbird"
+					}
+				],
+				"command": ["thunderbird"],
+				"move": true
+			}
+		},
+		"sysmon": {
+			"btop": {
+				"enable": false
+			},
+			"nvtop": {
+				"enable": true,
+				"match": [
+					{
+						"class": "nvtop"
+					},
+					{
+						"class": "com.mitchellh.ghostty",
+						"title": "nvtop"
+					}
+				],
+				"command": ["ghostty", "--class=nvtop", "--title=nvtop", "-e", "nvtop"]
+			},
+			"htop": {
+				"enable": true,
+				"match": [
+					{
+						"class": "htop"
+					},
+					{
+						"class": "com.mitchellh.ghostty",
+						"title": "htop"
+					}
+				],
+				"command": ["ghostty", "--class=htop", "--title=htop", "-e", "htop"]
+			}
+		},
+		"notes": {
+			"obsidian": {
+				"enable": true,
+				"match": [
+					{
+						"class": "obsidian"
+					},
+					{
+						"class": "Obsidian"
+					}
+				],
+				"command": ["obsidian"],
+				"move": true
+			}
+		},
+		"github": {
+			"gitkraken": {
+				"enable": true,
+				"match": [
+					{
+						"class": "GitKraken"
+					},
+					{
+						"initialClass": "GitKraken"
+					},
+					{
+						"title": "GitKraken Desktop"
+					}
+				],
+				"command": ["gitkraken"],
+				"move": true
+			}
+		}
+	}
+}
