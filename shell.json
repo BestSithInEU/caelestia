@@ -53,7 +53,8 @@
 			"showIcon": true
 		},
 		"dragThreshold": 20,
-		"entries": [{
+		"entries": [
+			{
 				"id": "logo",
 				"enabled": true
 			},
@@ -103,7 +104,7 @@
 			"showBluetooth": true,
 			"showKbLayout": false,
 			"showMicrophone": false,
-			"showNetwork": false,
+			"showNetwork": true,
 			"showLockStatus": true
 		},
 		"tray": {
@@ -135,7 +136,8 @@
 	},
 	"launcher": {
 		"actionPrefix": ">",
-		"actions": [{
+		"actions": [
+			{
 				"name": "Calculator",
 				"icon": "calculate",
 				"description": "Do simple math equations (powered by Qalc)",
@@ -268,8 +270,8 @@
 	},
 	"osd": {
 		"enabled": true,
-		"enableBrightness": true,
-		"enableMicrophone": false,
+		"enableBrightness": false,
+		"enableMicrophone": true,
 		"hideDelay": 2000
 	},
 	"paths": {
@@ -281,11 +283,13 @@
 		"audioIncrement": 0.1,
 		"defaultPlayer": "Spotify",
 		"gpuType": "NVIDIA",
-		"playerAliases": [{
-			"from": "com.github.th_ch.youtube_music",
-			"to": "YT Music"
-		}],
-		"weatherLocation": "Mersin, TR",
+		"playerAliases": [
+			{
+				"from": "com.github.th_ch.youtube_music",
+				"to": "YT Music"
+			}
+		],
+		"weatherLocation": "Istanbul, TR",
 		"useFahrenheit": false,
 		"useTwelveHourClock": false,
 		"smartScheme": true,

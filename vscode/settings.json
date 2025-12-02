@@ -613,7 +613,7 @@
 	},
 
 	"window.dialogStyle": "custom",
-	"workbench.colorTheme": "Material Code",
+	"workbench.colorTheme": "Caelestia",
 	"kilo-code.allowedCommands": ["git log", "git diff", "git show"],
 	"kilo-code.deniedCommands": [],
 	"github.copilot.enable": {
@@ -640,5 +640,6 @@
 	"chat.instructionsFilesLocations": {
 		".github/instructions": true,
 		"/home/bestsithineu/.aitk/instructions/": true
-	}
+	},
+	"notebook.lineNumbers": "on"
 }
