@@ -13,7 +13,8 @@
 		"enableWarp": true,
 		"enableCava": true,
 		"enableZen": true,
-		"enableTweakCC": true
+		"enableTweakCC": true,
+		"enableGhostty": true
 	},
 	"resizer": {
 		"rules": [
@@ -71,7 +72,17 @@
 	"toggles": {
 		"music": {
 			"spotify": {
-				"enable": true
+				"enable": true,
+				"match": [
+					{
+						"class": "spotify"
+					},
+					{
+						"class": "Spotify"
+					}
+				],
+				"command": ["spotify"],
+				"move": true
 			}
 		},
 		"communication": {
@@ -118,33 +129,23 @@
 		},
 		"sysmon": {
 			"btop": {
-				"enable": false
+				"enable": true,
+				"match": [
+					{
+						"class": "btop"
+					},
+					{
+						"class": "com.mitchellh.ghostty",
+						"title": "btop"
+					}
+				],
+				"command": ["ghostty", "--class=btop", "--title=btop", "-e", "fish", "-c", "tmux kill-session -t sysmon 2>/dev/null; tmux new-session -s sysmon 'btop' \\; split-window -h -p 35 'nvtop' \\; select-pane -t 0"]
 			},
 			"nvtop": {
-				"enable": true,
-				"match": [
-					{
-						"class": "nvtop"
-					},
-					{
-						"class": "com.mitchellh.ghostty",
-						"title": "nvtop"
-					}
-				],
-				"command": ["ghostty", "--class=nvtop", "--title=nvtop", "-e", "nvtop"]
+				"enable": false
 			},
 			"htop": {
-				"enable": true,
-				"match": [
-					{
-						"class": "htop"
-					},
-					{
-						"class": "com.mitchellh.ghostty",
-						"title": "htop"
-					}
-				],
-				"command": ["ghostty", "--class=htop", "--title=htop", "-e", "htop"]
+				"enable": false
 			}
 		},
 		"notes": {
