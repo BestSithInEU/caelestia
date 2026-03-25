@@ -181,6 +181,12 @@ if confirm-overwrite $config/foot
     ln -s (realpath foot) $config/foot
 end
 
+# Ghostty
+if confirm-overwrite $config/ghostty
+    log 'Installing ghostty config...'
+    ln -s (realpath ghostty) $config/ghostty
+end
+
 # Fish
 if confirm-overwrite $config/fish
     log 'Installing fish config...'
@@ -199,10 +205,36 @@ if confirm-overwrite $config/uwsm
     ln -s (realpath uwsm) $config/uwsm
 end
 
+# Paru
+if confirm-overwrite $config/paru
+    log 'Installing paru config...'
+    ln -s (realpath paru) $config/paru
+end
+
 # Btop
 if confirm-overwrite $config/btop
     log 'Installing btop config...'
     ln -s (realpath btop) $config/btop
+end
+
+# Neovim (LazyVim)
+if confirm-overwrite $config/nvim
+    log 'Installing nvim config...'
+    ln -s (realpath nvim) $config/nvim
+end
+
+# Tmux
+if confirm-overwrite $HOME/.tmux.conf && confirm-overwrite $config/tmux/caelestia-colors.sh
+    log 'Installing tmux config...'
+    ln -s (realpath tmux/.tmux.conf) $HOME/.tmux.conf
+    mkdir -p $config/tmux
+    ln -s (realpath tmux/caelestia-colors.sh) $config/tmux/caelestia-colors.sh
+end
+
+# Tmuxinator
+if confirm-overwrite $config/tmuxinator
+    log 'Installing tmuxinator configs...'
+    ln -s (realpath tmux/tmuxinator) $config/tmuxinator
 end
 
 # Install spicetify
@@ -257,9 +289,11 @@ if set -q _flag_discord
     log 'Installing discord...'
     $aur_helper -S --needed discord equicord-installer-bin $noconfirm
 
-    # Install OpenAsar and Equicord
+    # Install OpenAsar and Equicord (skip OpenAsar if already installed)
     sudo Equilotl -install -location /opt/discord
-    sudo Equilotl -install-openasar -location /opt/discord
+    if ! test -f /opt/discord/resources/_app.asar
+        sudo Equilotl -install-openasar -location /opt/discord
+    end
 
     # Remove installer
     $aur_helper -Rns equicord-installer-bin $noconfirm
@@ -296,6 +330,43 @@ if set -q _flag_zen
 
     # Prompt user to install extension
     log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
+end
+
+# Desktop entries
+set -l desktop_dir $HOME/.local/share/applications
+mkdir -p $desktop_dir
+for file in desktop/*.desktop
+    set -l name (basename $file)
+    if confirm-overwrite $desktop_dir/$name
+        log "Installing desktop entry $name..."
+        ln -s (realpath $file) $desktop_dir/$name
+    end
+end
+
+# Caelestia configs
+if confirm-overwrite $config/caelestia/shell.json
+    log 'Installing shell config...'
+    mkdir -p $config/caelestia
+    ln -s (realpath shell.json) $config/caelestia/shell.json
+end
+
+if confirm-overwrite $config/caelestia/cli.json
+    log 'Installing cli config...'
+    mkdir -p $config/caelestia
+    ln -s (realpath cli.json) $config/caelestia/cli.json
+end
+
+# Set English 12-hour time format
+if not grep -q 'LC_TIME=en_US.UTF-8' /etc/locale.conf
+    log 'Setting LC_TIME to en_US.UTF-8...'
+    sudo sed -i 's/LC_TIME=.*/LC_TIME=en_US.UTF-8/' /etc/locale.conf
+end
+
+# Auto-unlock gnome-keyring at login
+if ! grep -q pam_gnome_keyring /etc/pam.d/system-login
+    log 'Setting up gnome-keyring PAM auto-unlock...'
+    sudo sed -i '/^auth.*include.*system-auth/a auth       optional   pam_gnome_keyring.so' /etc/pam.d/system-login
+    sudo sed -i '/^-session.*pam_systemd.so/a session    optional   pam_gnome_keyring.so auto_start' /etc/pam.d/system-login
 end
 
 # Generate scheme stuff if needed
