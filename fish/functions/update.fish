@@ -1,6 +1,8 @@
 function update --description 'Update all package managers'
     echo "=== System Packages ==="
-    if type -q pacman
+    if type -q paru
+        paru -Syu
+    else if type -q pacman
         sudo pacman -Syu
     else if type -q apt
         sudo apt update && sudo apt upgrade
@@ -18,11 +20,6 @@ function update --description 'Update all package managers'
     echo -e "\n=== Flatpak ==="
     if type -q flatpak
         flatpak update -y
-    end
-
-    echo -e "\n=== Snap ==="
-    if type -q snap
-        sudo snap refresh
     end
 
     echo -e "\n=== Rust ==="
@@ -43,21 +40,13 @@ function update --description 'Update all package managers'
     end
 
     echo -e "\n=== Python packages ==="
-    if type -q pip
-        pip list --outdated --format=json | python -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" | xargs -n1 pip install -U 2>/dev/null
+    if type -q uv
+        uv self update
+        uv tool upgrade --all 2>/dev/null
     end
 
     if type -q pipx
         pipx upgrade-all
-    end
-
-    if type -q uv
-        uv self update
-    end
-
-    echo -e "\n=== Go packages ==="
-    if type -q go
-        go get -u all
     end
 
     echo -e "\nAll updates completed!"

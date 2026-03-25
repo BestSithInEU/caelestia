@@ -6,32 +6,22 @@ alias python 'python3'
 alias pip 'python3 -m pip'
 alias venv 'python3 -m venv'
 alias pydoc 'python3 -m pydoc'
-alias pyserve 'python3 -m http.server'
 alias pytest 'python3 -m pytest'
 
-# UV (modern Python package manager)
+# UV (modern Python package manager) — frequent commands are abbrs in config.fish
 if type -q uv
-    alias uvr 'uv run'
     alias uvp 'uv pip'
-    alias uvi 'uv pip install'
-    alias uvs 'uv pip sync'
-    alias uvl 'uv pip list'
-    alias uvf 'uv pip freeze'
-    alias uvu 'uv pip uninstall'
+    alias uvpi 'uv pip install'
+    alias uvps 'uv pip sync'
+    alias uvpl 'uv pip list'
+    alias uvpf 'uv pip freeze'
+    alias uvpu 'uv pip uninstall'
     alias uvv 'uv venv'
-    alias uva 'source .venv/bin/activate.fish'
+    alias uvact 'source .venv-linux/bin/activate.fish; or source .venv/bin/activate.fish'
     alias uvd 'deactivate'
-    alias uvx 'uvx'  # for running tools
     alias uvc 'uv cache'
     alias uvcc 'uv cache clean'
-
-    # UV project commands
-    alias uvinit 'uv init'
-    alias uvadd 'uv add'
-    alias uvrem 'uv remove'
-    alias uvsync 'uv sync'
-    alias uvlock 'uv lock'
-    alias uvtree 'uv tree'
+    alias uvt 'uv tree'
 end
 
 # Virtual environment functions
@@ -88,38 +78,53 @@ end
 
 # Auto-activate virtual environment when entering directory
 function __auto_activate_venv --on-variable PWD
-    if test -f .venv/bin/activate.fish
+    # Prevent infinite recursion (sourcing activate and builtin cd re-trigger this)
+    if set -q __activating_venv
+        return
+    end
+    set -g __activating_venv 1
+
+    set -l _saved_pwd $PWD
+    if test -f .venv-linux/bin/activate.fish
+        if test "$VIRTUAL_ENV" != "$PWD/.venv-linux"
+            # Deactivate old venv before activating new one
+            if test -n "$VIRTUAL_ENV"; and type -q deactivate
+                deactivate
+            end
+            source .venv-linux/bin/activate.fish
+            builtin cd $_saved_pwd
+        end
+    else if test -f .venv/bin/activate.fish
         if test "$VIRTUAL_ENV" != "$PWD/.venv"
+            if test -n "$VIRTUAL_ENV"; and type -q deactivate
+                deactivate
+            end
             activate
+            builtin cd $_saved_pwd
         end
     else if test -f venv/bin/activate.fish
         if test "$VIRTUAL_ENV" != "$PWD/venv"
+            if test -n "$VIRTUAL_ENV"; and type -q deactivate
+                deactivate
+            end
             activate
+            builtin cd $_saved_pwd
         end
     else if test -f .python-version
         # For pyenv users
         if type -q pyenv
-            pyenv local (cat .python-version)
+            pyenv local (command cat .python-version)
+        end
+    else
+        # No venv in this directory — deactivate stale one
+        if test -n "$VIRTUAL_ENV"; and type -q deactivate
+            deactivate
         end
     end
+
+    set -e __activating_venv
 end
 
-# Poetry aliases
-if type -q poetry
-    alias po 'poetry'
-    alias poa 'poetry add'
-    alias pod 'poetry add --dev'
-    alias por 'poetry remove'
-    alias poi 'poetry install'
-    alias pou 'poetry update'
-    alias pos 'poetry shell'
-    alias por 'poetry run'
-    alias pob 'poetry build'
-    alias pop 'poetry publish'
-    alias pol 'poetry lock'
-    alias pov 'poetry version'
-    alias poe 'poetry env'
-end
 
 # Pipx aliases
 if type -q pipx
@@ -199,14 +204,6 @@ alias rufff 'ruff format'
 # Quick Python scripts
 function pymath
     python3 -c "import math; print($argv)"
-end
-
-function pyjson
-    python3 -m json.tool $argv
-end
-
-function pyhttp
-    python3 -m http.server $argv[1] || python3 -m http.server 8000
 end
 
 function pytime

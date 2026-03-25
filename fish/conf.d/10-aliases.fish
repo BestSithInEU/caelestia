@@ -10,12 +10,8 @@ alias ..... 'cd ../../../..'
 
 # Core utilities replacements
 alias ls 'eza --icons --group-directories-first'
-alias l 'eza -l --icons --group-directories-first'
-alias la 'eza -la --icons --group-directories-first'
-alias ll 'eza -l --icons --group-directories-first'
 alias lt 'eza --tree --icons --level=2'
 alias lta 'eza --tree --icons --level=2 -la'
-alias tree 'eza --tree --icons'
 
 alias cat 'bat --paging=never'
 alias less 'bat'
@@ -48,21 +44,23 @@ alias q 'exit'
 alias h 'history'
 alias j 'jobs -l'
 alias which 'type -a'
-alias path 'echo -e $PATH | tr ":" "\n" | nl | sort'
+alias showpath 'printf "%s\n" $PATH | nl'
 
 # Network
 alias ip 'ip -color=auto'
 alias ports 'ss -tulanp'
 alias listening 'ss -tulnp'
-alias myip 'curl -s https://ipinfo.io/ip'
-alias speedtest 'curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+alias myip 'command curl -s https://ipinfo.io/ip'
+alias speedtest 'command curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
 
-# Package management (adjust for your distro)
-alias update 'sudo pacman -Syu'
-alias install 'sudo pacman -S'
-alias search 'pacman -Ss'
-alias remove 'sudo pacman -Rns'
-alias cleanup 'sudo pacman -Sc'
+# Package management (paru) — functions instead of aliases to avoid inheriting paru completions
+function install --description 'Install packages'; paru -S $argv; end
+function search --description 'Search packages'; paru -Ss $argv; end
+function remove --description 'Remove packages'; paru -Rns $argv; end
+function cleanup --description 'Clean package cache'; paru -Sc $argv; end
+function orphans --description 'Remove orphaned packages'; paru -Qdtq | paru -Rns -; end
+function pkginfo --description 'Show package info'; paru -Qi $argv; end
+function pkglist --description 'List installed packages'; paru -Qe $argv; end
 
 # Safety nets
 alias chown 'chown --preserve-root'

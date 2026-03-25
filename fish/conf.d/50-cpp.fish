@@ -31,14 +31,12 @@ alias mkr 'make release'
 alias mkt 'make test'
 alias mkj 'make -j(nproc)'
 
-alias ninja 'ninja'
 alias nb 'ninja build'
 alias nc 'ninja clean'
 alias nt 'ninja test'
 
 # Debugging tools
 alias gdb 'gdb -q'
-alias lldb 'lldb'
 alias valgrind 'valgrind --leak-check=full --show-leak-kinds=all'
 alias vg 'valgrind'
 alias vgf 'valgrind --leak-check=full'
@@ -50,12 +48,10 @@ alias vgm 'valgrind --tool=massif'
 # Static analysis
 alias cppcheck 'cppcheck --enable=all --suppress=missingIncludeSystem'
 alias cpplint 'cpplint --filter=-legal/copyright'
-alias clang-tidy 'clang-tidy'
 alias clang-format 'clang-format -style=file'
 alias cf 'clang-format -i'
 
 # Documentation
-alias doxygen 'doxygen'
 alias doxy 'doxygen Doxyfile'
 
 # Functions for C++ development
@@ -128,7 +124,7 @@ function cpp-run
         cd build
         make -j(nproc)
         if test $status -eq 0
-            set -l executable (find . -maxdepth 1 -type f -executable | head -1)
+            set -l executable (command find . -maxdepth 1 -type f -executable | head -1)
             if test -n "$executable"
                 $executable $argv
             else
@@ -177,7 +173,7 @@ end
 
 function cpp-format
     if test (count $argv) -eq 0
-        find . -name "*.cpp" -o -name "*.hpp" -o -name "*.h" -o -name "*.cc" | xargs clang-format -i
+        command find . -name "*.cpp" -o -name "*.hpp" -o -name "*.h" -o -name "*.cc" | xargs clang-format -i
     else
         clang-format -i $argv
     end
@@ -194,7 +190,7 @@ end
 function cpp-tidy
     if test -f compile_commands.json
         if test (count $argv) -eq 0
-            find src -name "*.cpp" | xargs clang-tidy
+            command find src -name "*.cpp" | xargs clang-tidy
         else
             clang-tidy $argv
         end
@@ -218,7 +214,6 @@ end
 
 # Conan package manager aliases
 if type -q conan
-    alias conan 'conan'
     alias coi 'conan install'
     alias cob 'conan build'
     alias coc 'conan create'

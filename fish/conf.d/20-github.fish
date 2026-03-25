@@ -7,28 +7,22 @@ set -gx GIT_PAGER delta
 set -gx DELTA_FEATURES "side-by-side line-numbers decorations"
 set -gx DELTA_SYNTAX_THEME "Dracula"
 
-# Basic git aliases
+# Basic git aliases (abbreviations in config.fish handle: ga, gb, gbd, gc, gco, gd, gf, gl, gm, gp, gpl, grb, gs, gst)
 alias g 'git'
-alias ga 'git add'
 alias gaa 'git add --all'
 alias gap 'git add -p'
 alias gau 'git add -u'
 
-alias gb 'git branch'
 alias gba 'git branch -a'
-alias gbd 'git branch -d'
 alias gbD 'git branch -D'
 alias gbr 'git branch -r'
 
-alias gc 'git commit'
 alias gcm 'git commit -m'
 alias gca 'git commit --amend'
 alias gcam 'git commit --amend -m'
 alias gcan 'git commit --amend --no-edit'
 alias gcn 'git commit --no-verify'
-alias gcl 'git clone'
 
-alias gco 'git checkout'
 alias gcob 'git checkout -b'
 alias gcom 'git checkout main'
 alias gcod 'git checkout develop'
@@ -37,34 +31,28 @@ alias gcp 'git cherry-pick'
 alias gcpa 'git cherry-pick --abort'
 alias gcpc 'git cherry-pick --continue'
 
-alias gd 'git diff'
 alias gds 'git diff --staged'
 alias gdh 'git diff HEAD'
 alias gdt 'git difftool'
 
-alias gf 'git fetch'
 alias gfa 'git fetch --all'
 alias gfo 'git fetch origin'
 
-alias gl 'git log --oneline --graph --decorate'
 alias gla 'git log --oneline --graph --decorate --all'
 alias glg 'git log --stat'
 alias glgg 'git log --graph'
 alias glgga 'git log --graph --decorate --all'
 alias glo 'git log --oneline'
 
-alias gm 'git merge'
 alias gma 'git merge --abort'
 alias gmc 'git merge --continue'
 alias gms 'git merge --squash'
 
-alias gp 'git push'
 alias gpf 'git push --force-with-lease'
 alias gpF 'git push --force'
 alias gpu 'git push -u origin HEAD'
 alias gpd 'git push --delete'
 
-alias gpl 'git pull'
 alias gplr 'git pull --rebase'
 
 alias gr 'git remote'
@@ -72,7 +60,6 @@ alias gra 'git remote add'
 alias grv 'git remote -v'
 alias grr 'git remote remove'
 
-alias grb 'git rebase'
 alias grba 'git rebase --abort'
 alias grbc 'git rebase --continue'
 alias grbi 'git rebase -i'
@@ -82,10 +69,8 @@ alias grs 'git reset'
 alias grsh 'git reset --hard'
 alias grss 'git reset --soft'
 
-alias gs 'git status'
 alias gss 'git status -s'
 
-alias gst 'git stash'
 alias gsta 'git stash apply'
 alias gstd 'git stash drop'
 alias gstl 'git stash list'
@@ -149,6 +134,56 @@ function gpr
     else
         gh pr create --title "$argv[1]" --body "$argv[2..-1]"
     end
+end
+
+# Git worktree helpers
+function gwa --description 'Add a git worktree'
+    if test (count $argv) -lt 1
+        echo "Usage: gwa <branch> [path]"
+        return 1
+    end
+    set -l branch $argv[1]
+    set -l path $argv[2]
+    test -z "$path"; and set path "../"(path basename (pwd))"-$branch"
+    git worktree add $path $branch $argv[3..-1]
+end
+
+function gwl --description 'List git worktrees'
+    git worktree list
+end
+
+function gwr --description 'Remove a git worktree'
+    if test (count $argv) -lt 1
+        echo "Usage: gwr <path>"
+        return 1
+    end
+    git worktree remove $argv[1]
+end
+
+# Clone and cd into repo
+function gcl --wraps 'git clone' --description 'Clone repo and cd into it'
+    command git clone $argv
+    and set -l dir (string replace -r '.*/' '' -- $argv[-1] | string replace '.git' '')
+    and cd $dir
+end
+
+# Recent branches sorted by last commit
+function gbrecent --description 'Show recent branches'
+    git for-each-ref --count=15 --sort=-committerdate refs/heads/ \
+        --format='%(color:yellow)%(refname:short)%(color:reset) %(color:green)(%(committerdate:relative))%(color:reset) %(contents:subject)'
+end
+
+# Commit count by author
+function gcount --description 'Commit count by author'
+    git shortlog -sn --no-merges $argv
+end
+
+# Quick gitignore append
+function gignore --description 'Add patterns to .gitignore'
+    for pattern in $argv
+        echo $pattern >> .gitignore
+    end
+    echo "Added to .gitignore: $argv"
 end
 
 # Git flow shortcuts

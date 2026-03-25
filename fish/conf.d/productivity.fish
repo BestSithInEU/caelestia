@@ -22,10 +22,10 @@ function sysinfo
     free -h | grep "^Mem"
     echo ""
     echo "=== Disk Usage ==="
-    df -h / | tail -1
+    command df -h / | tail -1
     echo ""
     echo "=== Network ==="
-    ip -4 addr show | grep inet | grep -v 127.0.0.1 | awk '{print $2}'
+    command ip -4 addr show | grep inet | grep -v 127.0.0.1 | awk '{print $2}'
 end
 
 # Weather
@@ -34,7 +34,7 @@ function weather
     if test -z "$location"
         set location "auto"
     end
-    curl -s "wttr.in/$location?format=v2"
+    command curl -s "wttr.in/$location?format=v2"
 end
 
 # Cheatsheet
@@ -43,7 +43,7 @@ function cheat
         echo "Usage: cheat <command>"
         return 1
     end
-    curl -s "cheat.sh/$argv[1]"
+    command curl -s "cheat.sh/$argv[1]"
 end
 
 # Timer and stopwatch
@@ -86,27 +86,10 @@ function backup
     set -l backup_name "$source.backup."(date +%Y%m%d_%H%M%S)
 
     if test -e $source
-        cp -r $source $backup_name
+        command cp -r $source $backup_name
         echo "Backed up to $backup_name"
     else
         echo "Source not found: $source"
-    end
-end
-
-# Archive extraction helper (enhanced)
-function unpack
-    if test (count $argv) -eq 0
-        echo "Usage: unpack <archive>"
-        return 1
-    end
-
-    for file in $argv
-        if test -f $file
-            echo "Extracting $file..."
-            extract $file
-        else
-            echo "File not found: $file"
-        end
     end
 end
 
@@ -138,7 +121,7 @@ function pf
         return 1
     end
 
-    ps aux | grep -i $argv[1] | grep -v grep
+    command ps aux | grep -i $argv[1] | grep -v grep
 end
 
 # Kill process by name
@@ -148,23 +131,13 @@ function pk
         return 1
     end
 
-    set -l pids (ps aux | grep -i $argv[1] | grep -v grep | awk '{print $2}')
+    set -l pids (command ps aux | grep -i $argv[1] | grep -v grep | awk '{print $2}')
     if test -n "$pids"
         echo "Killing processes: $pids"
         echo $pids | xargs kill -9
     else
         echo "No processes found matching: $argv[1]"
     end
-end
-
-# Directory size summary
-function dirsize
-    set -l dir $argv[1]
-    if test -z "$dir"
-        set dir "."
-    end
-
-    du -h --max-depth=1 $dir | sort -hr
 end
 
 # Find large files
@@ -179,7 +152,7 @@ function findlarge
         set dir $argv[2]
     end
 
-    find $dir -type f -size +$size -exec ls -lh {} \; | awk '{print $5 " " $9}'
+    command find $dir -type f -size +$size -exec ls -lh {} \; | awk '{print $5 " " $9}'
 end
 
 # Quick project templates
@@ -243,7 +216,7 @@ function shorten
         echo "Usage: shorten <url>"
         return 1
     end
-    curl -s "https://is.gd/create.php?format=simple&url=$argv[1]"
+    command curl -s "https://is.gd/create.php?format=simple&url=$argv[1]"
 end
 
 # Color palette
@@ -270,23 +243,6 @@ function colors
     end
 end
 
-# Man page with color - use bat if available, otherwise colored less
-function man --wraps man --description 'Colorized man pages'
-    if type -q bat
-        set -lx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-        command man $argv
-    else
-        set -lx LESS_TERMCAP_mb \e'[1;31m'
-        set -lx LESS_TERMCAP_md \e'[1;31m'
-        set -lx LESS_TERMCAP_me \e'[0m'
-        set -lx LESS_TERMCAP_se \e'[0m'
-        set -lx LESS_TERMCAP_so \e'[1;44;33m'
-        set -lx LESS_TERMCAP_ue \e'[0m'
-        set -lx LESS_TERMCAP_us \e'[1;32m'
-        command man $argv
-    end
-end
-
 # Quick aliases for common directories
 alias desk 'cd ~/Desktop'
 alias docs 'cd ~/Documents'
@@ -294,6 +250,75 @@ alias dl 'cd ~/Downloads'
 alias pics 'cd ~/Pictures'
 alias vids 'cd ~/Videos'
 alias music 'cd ~/Music'
-alias proj 'cd ~/Projects'
-alias conf 'cd ~/.config'
-alias dots 'cd ~/dotfiles'
+alias proj 'cd ~/Documents/Projects'
+alias dots 'cd ~/Documents/Projects/caelestia'
+
+# System maintenance
+function sys-clean --description 'Clean system caches and logs'
+    echo "=== Paru cache ==="
+    paru -Sc --noconfirm
+    echo -e "\n=== Orphaned packages ==="
+    set -l orphans (paru -Qdtq)
+    if test -n "$orphans"
+        echo $orphans
+        echo "Run 'orphans' to remove them"
+    else
+        echo "None found"
+    end
+    echo -e "\n=== Journal ==="
+    sudo journalctl --vacuum-time=7d
+    echo -e "\n=== Home cache ==="
+    echo "Cache size: "(command du -sh ~/.cache 2>/dev/null | cut -f1)
+end
+
+function journal-clean --description 'Clean old journal entries'
+    sudo journalctl --vacuum-time=$argv[1] 2>/dev/null
+    or sudo journalctl --vacuum-time=7d
+end
+
+function please --description 'Re-run last command with sudo'
+    command sudo $history[1]
+end
+
+function reload --description 'Reload fish config'
+    exec fish
+end
+
+# Quick throwaway workspace
+function tmp --description 'Create and cd into temp directory'
+    set -l dir (mktemp -d)
+    cd $dir
+    echo "Working in $dir"
+end
+
+# Quick config editing
+function conf --description 'Edit common config files'
+    switch $argv[1]
+        case fish
+            $EDITOR ~/.config/fish/config.fish
+        case hypr
+            $EDITOR ~/.config/hypr/hyprland.conf
+        case star starship
+            $EDITOR ~/.config/starship.toml
+        case ''
+            echo "Usage: conf <fish|hypr|starship>"
+    end
+end
+
+# Generate random password
+function genpass --description 'Generate random password'
+    set -l len $argv[1]
+    test -z "$len"; and set len 24
+    head -c 256 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9!@#$%' | head -c $len
+    echo
+end
+
+# Base64 encode/decode
+function encode --description 'Base64 encode'
+    echo -n $argv | base64
+end
+
+function decode --description 'Base64 decode'
+    echo -n $argv | base64 -d
+    echo
+end

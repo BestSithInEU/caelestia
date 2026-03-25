@@ -1,11 +1,5 @@
 # Modern CLI Tools Configuration
 
-# Zoxide - smarter cd
-if type -q zoxide
-    zoxide init fish | source
-    alias cdi __zoxide_zi
-end
-
 # Eza configuration (modern ls)
 set -gx EZA_ICONS_AUTO true
 set -gx EZA_COLORS "uu=36:gu=37:sn=32:sb=32:da=34:ur=34:uw=35:ux=36:ue=36:gr=34:gw=35:gx=36:tr=34:tw=35:tx=36"
@@ -145,7 +139,7 @@ end
 # JSON tools
 function json
     if test -p /dev/stdin
-        cat | jq '.'
+        command cat | jq '.'
     else if test -f "$argv[1]"
         jq '.' $argv[1]
     else
@@ -155,8 +149,59 @@ end
 
 function json-pretty
     if test -p /dev/stdin
-        cat | jq '.' > /tmp/json_pretty.json && mv /tmp/json_pretty.json $argv[1]
+        command cat | jq '.' > /tmp/json_pretty.json && mv /tmp/json_pretty.json $argv[1]
     else
         jq '.' $argv[1] > /tmp/json_pretty.json && mv /tmp/json_pretty.json $argv[1]
     end
+end
+
+# Bat-powered helpers
+function show --description 'List shell definitions or show colored --help'
+    switch "$argv[1]"
+        case abbrs abbr
+            abbr --show
+        case aliases alias
+            alias
+        case functions funcs
+            for f in (functions --names | string match -v '_*' | string match -v 'fish_*' | sort)
+                set -l src (functions -D $f 2>/dev/null)
+                string match -q '*/conf.d/*' "$src"; or string match -q '*/functions/*' "$src"; or continue
+                # Skip plugin files
+                string match -q '*/fisher.fish' "$src"; and continue
+                string match -q '*/fzf*' "$src"; and continue
+                string match -q '*/getopts.fish' "$src"; and continue
+                string match -q '*/replay.fish' "$src"; and continue
+                string match -q '*/sponge*' "$src"; and continue
+                string match -q '*/autopair*' "$src"; and continue
+                string match -q '*/abbr_tips*' "$src"; and continue
+                set -l desc (functions $f | string match -r -- "--description '([^']+)'")[2]
+                test -z "$desc"; and continue
+                string match -q 'alias *' "$desc"; and continue
+                printf "  %s%-20s%s  %s\n" (set_color yellow) $f (set_color normal) "$desc"
+            end
+        case all
+            echo "=== Abbreviations ==="
+            abbr --show
+            echo -e "\n=== Aliases ==="
+            alias
+            echo -e "\n=== Custom Functions ==="
+            show functions
+        case ''
+            echo "Usage:"
+            echo "  show abbrs      - list abbreviations"
+            echo "  show aliases    - list aliases"
+            echo "  show functions  - list custom functions"
+            echo "  show all        - list everything"
+            echo "  show <command>  - show colored --help output"
+        case '*'
+            $argv --help 2>&1 | bat --plain --language=help
+    end
+end
+
+function batdiff --description 'Diff with bat syntax highlighting'
+    diff $argv | bat --plain --language=diff
+end
+
+function batlog --description 'Tail a log file with bat'
+    tail -f $argv | bat --paging=never -l log
 end
