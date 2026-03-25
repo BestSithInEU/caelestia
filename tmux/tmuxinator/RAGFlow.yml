@@ -1,0 +1,18 @@
+name: RAGFlow
+root: ~/Documents/containers/ragflow/docker
+
+windows:
+  - logs:
+      layout: main-horizontal
+      panes:
+        - docker compose logs ragflow-gpu -f 2>&1 | grep -v "POST /v1/doc\|GET /v1/kb\|POST /v1/mcp\|POST /v1/canvas\|POST /v1/chunk\|POST /v1/document"
+        - docker compose logs ragflow-gpu -f 2>&1 | grep "build_subgraph.*done\|build_subgraph.*start" | grep -v "heartbeat"
+        - watch -n 10 'docker compose ps'
+  - mineru:
+      panes:
+        - CUDA_VISIBLE_DEVICES="" mineru-api --host 0.0.0.0 --port 9987
+  - ollama:
+      layout: main-horizontal
+      panes:
+        - journalctl --user -u ollama.service -f --no-pager
+        - watch -n 5 'ollama ps'

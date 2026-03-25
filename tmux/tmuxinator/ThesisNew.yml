@@ -1,0 +1,22 @@
+name: ThesisNew
+root: ~/Documents/ThesisNew
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim .
+        - null
+  - training:
+      layout: main-horizontal
+      panes:
+        - null
+        - lnav logs/ 2>/dev/null || echo "No logs yet"
+  - gpu:
+      layout: even-horizontal
+      panes:
+        - nvtop
+        - watch -n 2 nvidia-smi
+  - git:
+      panes:
+        - lazygit

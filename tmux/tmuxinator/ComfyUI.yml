@@ -1,0 +1,15 @@
+name: ComfyUI
+root: ~/ComfyUI
+
+windows:
+  - server:
+      layout: main-horizontal
+      panes:
+        - uv run python main.py --listen --preview-method auto
+        - tail -f ~/ComfyUI/user/comfyui.log
+  - nodes:
+      panes:
+        - cd custom_nodes
+  - claude:
+      panes:
+        - claude -c
